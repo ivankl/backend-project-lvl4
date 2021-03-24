@@ -4,9 +4,9 @@
   "description": "Fourth project for Hexlet",
   "main": "src/index.js",
   "scripts": {
-    "build-server": "NODE_ENV=test babel src --out-dir dist/server",
+    "build-server": "babel src --out-dir dist/server",
     "build": "npm run build-server",
-    "start": "NODE_ENV=test node dist/server/bin/server.js"
+    "start": "node dist/server/bin/server.js"
   },
   "type": "module",
   "engines": {
