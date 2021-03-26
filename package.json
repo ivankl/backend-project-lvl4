@@ -4,8 +4,10 @@
   "description": "Fourth project for Hexlet",
   "main": "src/index.js",
   "scripts": {
+    "build-configs": "babel webpack.config.babel.js --out-dir dist",
+    "build-frontend": "NODE_ENV=production webpack --mode production",
     "build-server": "babel src --out-dir dist/server",
-    "build": "npm run build-server",
+    "build": "npm run build-server && npm run build-configs && npm run build-frontend",
     "start": "node dist/server/bin/server.js"
   },
   "type": "module",
@@ -23,9 +25,17 @@
   },
   "homepage": "https://github.com/ivankl/backend-project-lvl4#readme",
   "dependencies": {
+    "bootstrap": "^4.6.0",
+    "css-loader": "^5.2.0",
     "dotenv": "^8.2.0",
     "fastify": "^3.14.0",
-    "pino-pretty": "^4.7.1"
+    "i18next": "^20.1.0",
+    "install": "^0.13.0",
+    "mini-css-extract-plugin": "^1.3.9",
+    "path": "^0.12.7",
+    "pino-pretty": "^4.7.1",
+    "point-of-view": "^4.14.0",
+    "pug": "^3.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.10",
@@ -41,6 +51,8 @@
     "eslint-plugin-jest": "^24.3.2",
     "jest": "^26.6.3",
     "jest-cli": "^26.6.3",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "webpack": "^5.28.0",
+    "webpack-cli": "^4.5.0"
   }
 }
