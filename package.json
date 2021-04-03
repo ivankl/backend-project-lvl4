@@ -2,11 +2,12 @@
   "name": "@hexlet/code",
   "version": "0.0.1",
   "description": "Fourth project for Hexlet",
-  "main": "src/index.js",
+  "main": "server/index.js",
   "scripts": {
+    "prebuild": "rm -rf dist",
     "build-configs": "babel webpack.config.babel.js --out-dir dist",
-    "build-frontend": "NODE_ENV=production webpack --mode production",
-    "build-server": "babel src --out-dir dist/server",
+    "build-frontend": "webpack --mode development",
+    "build-server": "babel server --out-dir dist/server --source-maps inline && cp -r server/views dist/server/views",
     "build": "npm run build-server && npm run build-configs && npm run build-frontend",
     "start": "node dist/server/bin/server.js"
   },
@@ -29,12 +30,15 @@
     "css-loader": "^5.2.0",
     "dotenv": "^8.2.0",
     "fastify": "^3.14.0",
+    "fastify-static": "^4.0.1",
     "i18next": "^20.1.0",
     "install": "^0.13.0",
+    "jquery": "^3.6.0",
     "mini-css-extract-plugin": "^1.3.9",
     "path": "^0.12.7",
     "pino-pretty": "^4.7.1",
     "point-of-view": "^4.14.0",
+    "popper.js": "^1.16.1",
     "pug": "^3.0.2"
   },
   "devDependencies": {
