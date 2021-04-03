@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import fastify from 'fastify';
-import fastifyStatic from 'fastify-static';
+// import fastifyStatic from 'fastify-static';
 import path from 'path';
 import Pug from 'pug';
 import pointOfView from 'point-of-view';
@@ -12,15 +12,16 @@ import addRoutes from './routes/routes.js';
 
 dotenv.config();
 
-
 const mode = process.env.NODE_ENV || 'development';
-const isProduction = mode === 'production';
+// const isProduction = mode === 'production';
 const isDevelopment = mode === 'development';
 
 const setUpViews = (app) => {
   const { devServer } = webpackConfig;
   const devHost = `http://${devServer.host}:${devServer.port}`;
   const domain = isDevelopment ? devHost : '';
+  const { pathname } = new URL(import.meta.url);
+  console.log(pathname);
   app.register(pointOfView, {
     engine: {
       pug: Pug,
@@ -29,7 +30,7 @@ const setUpViews = (app) => {
     defaultContext: {
       assetPath: (filename) => `${domain}/assets/${filename}`,
     },
-    templates: path.join(import.meta.url, '..', 'server', 'views'),
+    templates: path.resolve(pathname, '..', 'views'),
   });
 
   app.decorateReply('render', function render(viewPath, locals) {
@@ -37,7 +38,7 @@ const setUpViews = (app) => {
   });
 };
 
-const setUpStaticAssets = (app) => {
+/* const setUpStaticAssets = (app) => {
   const pathPublic = isProduction
     ? path.join(import.meta.url, '..', 'public')
     : path.join(import.meta.url, '..', 'dist', 'public');
@@ -45,7 +46,7 @@ const setUpStaticAssets = (app) => {
     root: pathPublic,
     prefix: '/assets/',
   });
-};
+}; */
 
 const setupLocalization = () => {
   i18next
@@ -68,6 +69,7 @@ export default () => {
   );
 
   setupLocalization();
+  setUpViews(app);
   addRoutes(app);
   return app;
 };
