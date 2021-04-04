@@ -3,17 +3,17 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 const mode = process.env.NODE_ENV || 'development';
 
+const { pathname } = new URL(import.meta.url);
+
 export default {
   mode,
   devtool: 'source-map',
   output: {
-    path: path.resolve(import.meta.url, 'dist', 'public'),
+    path: path.resolve(pathname, '..', 'dist', 'public'),
   },
   devServer: {
     host: 'localhost',
-    // contentBase: path.join(__dirname, 'dist', 'public'),
-    publicPath: '/assets/',
-    port: 8080,
+    port: 4000,
     compress: true,
   },
   module: {

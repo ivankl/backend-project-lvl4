@@ -1,8 +1,10 @@
 doctype(html)
 html(lang="en")
     head
-        link(href=assetPath('main.css') rel="stylesheet")
+        title Backend project level 4
+        script(src='main.js')
+        link(href='main.css' rel="stylesheet")
         meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
     body.d-flex.flex-column.min-vh-100
         nav.navbar.navbar-expand-lg.navbar-light.bg-light.mb-3
-        h1 I want to understand how it works
+            a.navbar-brand(href="/")= t('appName')

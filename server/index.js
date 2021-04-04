@@ -1,19 +1,21 @@
 import dotenv from 'dotenv';
 import fastify from 'fastify';
-// import fastifyStatic from 'fastify-static';
+import fastifyStatic from 'fastify-static';
 import path from 'path';
 import Pug from 'pug';
 import pointOfView from 'point-of-view';
 import i18next from 'i18next';
+// import i18nextmiddleware from 'i18next-http-middleware';
 import ru from './locales/ru.js';
 import webpackConfig from '../webpack.config.babel.js';
+import getHelpers from './helpers/index.js';
 
 import addRoutes from './routes/routes.js';
 
 dotenv.config();
 
 const mode = process.env.NODE_ENV || 'development';
-// const isProduction = mode === 'production';
+const isProduction = mode === 'production';
 const isDevelopment = mode === 'development';
 
 const setUpViews = (app) => {
@@ -21,15 +23,13 @@ const setUpViews = (app) => {
   const devHost = `http://${devServer.host}:${devServer.port}`;
   const domain = isDevelopment ? devHost : '';
   const { pathname } = new URL(import.meta.url);
-  console.log(pathname);
+  const helpers = getHelpers();
   app.register(pointOfView, {
     engine: {
       pug: Pug,
     },
     includeViewExtension: true,
-    defaultContext: {
-      assetPath: (filename) => `${domain}/assets/${filename}`,
-    },
+    defaultContext: { ...helpers },
     templates: path.resolve(pathname, '..', 'views'),
   });
 
@@ -38,21 +38,24 @@ const setUpViews = (app) => {
   });
 };
 
-/* const setUpStaticAssets = (app) => {
+const setUpStaticAssets = (app) => {
+
+  const { pathname } = new URL(import.meta.url);
   const pathPublic = isProduction
-    ? path.join(import.meta.url, '..', 'public')
-    : path.join(import.meta.url, '..', 'dist', 'public');
+    ? path.join(pathname, '..', 'public')
+    : path.join(pathname, '../..', 'public');
+  console.log(pathPublic);
   app.register(fastifyStatic, {
     root: pathPublic,
-    prefix: '/assets/',
   });
-}; */
+};
 
-const setupLocalization = () => {
+const setupLocalization = (app) => {
   i18next
     .init({
       lng: 'ru',
       fallbackLng: 'en',
+      debug: isDevelopment,
       resources: {
         ru,
       },
@@ -70,6 +73,7 @@ export default () => {
 
   setupLocalization();
   setUpViews(app);
+  setUpStaticAssets(app);
   addRoutes(app);
   return app;
 };

@@ -1,4 +1,6 @@
 export default (app) => {
   app
-    .get('/', (req, reply) => reply.render('landing'));
+    .get('/', (req, reply) => {
+      reply.render('landing')
+    });
 };
