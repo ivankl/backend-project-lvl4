@@ -42,7 +42,7 @@ const setUpStaticAssets = (app) => {
 
   const { pathname } = new URL(import.meta.url);
   const pathPublic = isProduction
-    ? path.join(pathname, '..', 'public')
+    ? path.join(pathname, '../..', 'public')
     : path.join(pathname, '../..', 'public');
   console.log(pathPublic);
   app.register(fastifyStatic, {
