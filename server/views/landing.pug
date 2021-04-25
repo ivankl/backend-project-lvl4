@@ -2,20 +2,21 @@ doctype(html)
 html(lang="en")
     head
         title Backend project level 4
-        script(src='main.js')
-        link(href='main.css' rel="stylesheet")
+        script(src=assetPath('main.js'))
+        link(href=assetPath('main.css') rel="stylesheet")
         meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
     body.d-flex.flex-column.min-vh-100
         nav.navbar.navbar-expand-lg.navbar-light.bg-light.mb-3
-            a.navbar-brand(href="/")=t('appName')
+            a.navbar-brand(href=route('root'))=t('appName')
             button.navbar-toggler(data-toggle="collapse" data-target="#navbarToggleExternalContent")
                 span.navbar-toggler-icon
             .collapse.navbar-collapse(id="navbarToggleExternalContent")
-                ul.navbar-nav.mr-auto
-                    li.nav-item
-                        a.nav-link=t('layouts.application.users')
-                    li.nav-item       
-                        a.nav-link=t('layouts.application.signIn')
-                    li.nav-item
-                        a.nav-link=t('layouts.application.signUp')
-
+                    ul.navbar-nav.mr-auto
+                        li.nav-item
+                            a.nav-link=t('layouts.application.users')
+                        li.nav-item       
+                            a.nav-link=t('layouts.application.signIn')
+                        li.nav-item
+                            a.nav-link(href=route('newUser'))=t('layouts.application.signUp')
+    block header
+    block content 
